@@ -4,14 +4,14 @@
 <!-- Author: mitchellsundt@gmail.com -->
 <meta http-equiv="X-UA-Compatible" content="IE=8"/>
 <title>Generate Stub XForm for Upload to ODK Aggregate</title>
-<!-- Conversion script for generating ODK1 Aggregate XForms definitions that 
+<!-- Conversion script for generating ODK1 Aggregate XForms definitions that
 will allow ODK Survey to upload submissions to the ODK1 Aggregate server
 data processing path.  This enables forward migration of the device application
-to ODK Survey for flat forms without repeat groups. 
+to ODK Survey for flat forms without repeat groups.
 
 To use, place your formDef.json files in separate directories ending in '-media'
 The script will search for formDef.json files in each such named directory, open
-that file, parse it, and synthesize a directoryName.xml file. The resulting 
+that file, parse it, and synthesize a directoryName.xml file. The resulting
 processed files can be uploaded using FormUploader into ODK1 Aggregate.
 -->
 <style type="text/css">
@@ -74,8 +74,8 @@ body {
 }
 /*]]>*/
 </style>
-<script type="text/javascript" src="js-xlsx/dist/shim.min.js"></script>
-<script type="text/javascript" src="js-xlsx/dist/xlsx.full.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/xlsx@0.14.1/dist/shim.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/xlsx@0.14.1/dist/xlsx.full.min.js"></script>
 <script type="text/javascript" src="XRegExp-All-3.0.0-pre-2014-12-24.js"></script>
 <script type="text/javascript" src="underscore.js"></script>
 <script type="text/javascript" src="XLSXConverter2.js"></script>
@@ -143,7 +143,7 @@ function handleSave(e) {
     var formDefJson = JSON.parse(formDefStr);
 	var formDefFile = "data:application/javascript;charset=utf-8," + formDefStr;
 	downloadFormDefJsonFile(formDefFile, "formDef.json");
-	
+
     // Generate definition.csv and properties.csv if necessary
     if (util.shouldWriteOutDefinitionAndPropertiesCsv(formDefJson)) {
 
@@ -159,8 +159,8 @@ function handleSave(e) {
         var propCsv = util.createPropertiesCsvFromDataTableModel(dtm, formDefJson);
         propCsv = "data:text/csv;charset=utf-8," + propCsv;
         downloadCsvFile(propCsv, "properties.csv");
-    } 
-	
+    }
+
 	if (util.shouldWriteOutDefinitionsJs(formDefJson)) {
 		var tableId = util.getTableIdFromFormDef(formDefJson);
 
@@ -170,13 +170,13 @@ function handleSave(e) {
 			var trxJs = util.createDefinitionsJsFromDataTableModel(tableId, formDefJson);
 			trxJs = "data:application/javascript;charset=utf-8," + trxJs;
 			downloadTrxFile(trxJs, trxFilename);
-			
+
 			var trxCmnFilename = 'commonDefinitions.js';
 			// Create and write out commonDefinitions.js
 			var trxCmnJs = util.createDefinitionsJsFromDataTableModel(null, formDefJson);
 			trxCmnJs = "data:application/javascript;charset=utf-8," + trxCmnJs;
 			downloadTrxFile(trxCmnJs, trxCmnFilename);
-			
+
 		} else {
 			var trxFilename = 'tableSpecificDefinitions.js';
 			// Create and write out tableSpecificDefinitions.js
@@ -246,7 +246,7 @@ function postFormDef() {
         }
       });
 
-      // Post the definition.csv and properties.csv files 
+      // Post the definition.csv and properties.csv files
       // if necessary
       if (shouldWriteDefAndPropCsv) {
         // Get the dataTableModel
@@ -276,7 +276,7 @@ function postFormDef() {
       }
       if (shouldWriteDefinitionsJs) {
 		var tableId = util.getTableIdFromFormDef(formDefJson);
-		
+
 		if ( tableId === 'framework' ) {
 			// Create and write out frameworkDefinitions.js
 			var trxPath = util.getRelativePathToFrameworkDefinitionsJs(formDefJson);
@@ -364,7 +364,7 @@ function handleFileChooserClick(e) {
 
     // reset the value so that re-selecting the file will trigger a change event...
     browse.value = '';
-    
+
     if ( browse.disabled ) {
         e.stopPropagation();
         e.preventDefault();
@@ -453,7 +453,7 @@ function makeReader(f) {
             }
         }
     };
-	
+
 	var browse = document.getElementById("browsefile");
 	var drop = document.getElementById('drop');
 
@@ -466,7 +466,7 @@ function makeReader(f) {
         enableActions();
         errorEl.innerHTML = "Could not read file.";
         throw e;
-    }    
+    }
 }
 
 function handleDragover(e) {

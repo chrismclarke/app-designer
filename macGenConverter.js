@@ -6,7 +6,7 @@ var fs = require('fs');
 var path = require('path');
 var Buffer = require('buffer').Buffer;
 var constants = require('constants');
-var XLSX = require('./xlsxconverter/js-xlsx');
+var XLSX = require('xlsx');
 var util = require('./devEnv/js/devenv-util.js');
 
 function to_json(workbook) {
@@ -138,7 +138,7 @@ fs.readFile(filename, 'base64', function(err, data) {
 b64xlsx = fs.readFileSync(filename, 'base64');
 
 try {
-    var xlsx = XLSX.read(b64xlsx, {type: 'base64'});    
+    var xlsx = XLSX.read(b64xlsx, {type: 'base64'});
     var jsonWorkbook = to_json(xlsx);
     var processedWorkbook = XLSXConverter.processJSONWb(jsonWorkbook);
     result = JSON.stringify(processedWorkbook, 2, 2);
